@@ -1,0 +1,115 @@
+org: juliocesarnb
+service: foodiary-v2-api   # 👈 novo nome do projeto
+
+plugins:
+  - serverless-offline
+
+provider:
+  name: aws
+  region: us-east-1
+  runtime: nodejs22.x
+  architecture: arm64
+  environment:
+    DATABASE_URL: ${env:DATABASE_URL}
+    JWT_SECRET: ${env:JWT_SECRET}
+    OPENAI_API_KEY: ${env:OPENAI_API_KEY}
+    BUCKET_NAME: !Ref UploadsBucketV2
+    MEALS_QUEUE_URL: !Ref MealsQueueV2
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - s3:PutObject
+            - s3:GetObject
+          Resource: !Sub '${UploadsBucketV2.Arn}/*'
+        - Effect: Allow
+          Action: sqs:SendMessage
+          Resource: !GetAtt MealsQueueV2.Arn
+
+package:
+  individually: true
+
+build:
+  esbuild:
+    minify: true
+    sourcemap: false
+
+functions:
+  signin:
+    handler: src/functions/signin.handler
+    events:
+      - httpApi:
+          method: POST
+          path: /signin
+
+  signup:
+    handler: src/functions/signup.handler
+    events:
+      - httpApi:
+          method: POST
+          path: /signup
+
+  me:
+    handler: src/functions/me.handler
+    events:
+      - httpApi:
+          method: GET
+          path: /me
+
+  createMeal:
+    handler: src/functions/createMeal.handler
+    events:
+      - httpApi:
+          method: POST
+          path: /meals
+
+  listMeals:
+    handler: src/functions/listMeals.handler
+    events:
+      - httpApi:
+          method: GET
+          path: /meals
+
+  getMealById:
+    handler: src/functions/getMealById.handler
+    events:
+      - httpApi:
+          method: GET
+          path: /meals/{mealId}
+
+  fileUploadedEvent:
+    handler: src/functions/fileUploadedEvent.handler
+    events:
+      - s3:
+          bucket: !Ref UploadsBucketV2
+          event: s3:ObjectCreated:*
+          forceDeploy: true
+
+  processMeal:
+    handler: src/functions/processMeal.handler
+    events:
+      - sqs:
+          arn: !GetAtt MealsQueueV2.Arn
+          batchSize: 1
+
+resources:
+  Resources:
+    UploadsBucketV2:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: jstacklab-v2-foodiary-uploads   # 👈 diferente do antigo
+
+    MealsQueueV2:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: meals-queue-v2
+        VisibilityTimeout: 60
+        RedrivePolicy:
+          maxReceiveCount: 1
+          deadLetterTargetArn: !GetAtt MealsDLQV2.Arn
+
+    MealsDLQV2:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: meals-queue-v2-dlq
