@@ -1,0 +1,200 @@
+{
+    "Versions": [
+        {
+            "ETag": "\"1e6758f5634a192612d11705c6d39e70\"",
+            "ChecksumAlgorithm": [
+                "CRC64NVME"
+            ],
+            "ChecksumType": "FULL_OBJECT",
+            "Size": 23867,
+            "StorageClass": "STANDARD",
+            "Key": "serverless/foodiary-v2-api/dev/1758217274844-2025-09-18T17:41:14.844Z/compiled-cloudformation-template.json",
+            "VersionId": "ggZ5xS0EW452nG4nJGeSMaRQs1izU1Co",
+            "IsLatest": false,
+            "LastModified": "2025-09-18T17:41:20+00:00",
+            "Owner": {
+                "ID": "8a5b0ce8a0aa01fd18987eb20e2f5a83284b54161de865c5e818b083a3b4e098"
+            }
+        },
+        {
+            "ETag": "\"1f53f6330aa7d31bda3892778220749d\"",
+            "ChecksumAlgorithm": [
+                "CRC64NVME"
+            ],
+            "ChecksumType": "FULL_OBJECT",
+            "Size": 11395,
+            "StorageClass": "STANDARD",
+            "Key": "serverless/foodiary-v2-api/dev/1758217274844-2025-09-18T17:41:14.844Z/custom-resources.zip",
+            "VersionId": "sFuob7jYHw.wZcttUNTAFwmU8K7Mn3Us",
+            "IsLatest": false,
+            "LastModified": "2025-09-18T17:41:24+00:00",
+            "Owner": {
+                "ID": "8a5b0ce8a0aa01fd18987eb20e2f5a83284b54161de865c5e818b083a3b4e098"
+            }
+        },
+        {
+            "ETag": "\"cb9440ac7ac3ebaa80d583742f97e52c\"",
+            "ChecksumAlgorithm": [
+                "CRC64NVME"
+            ],
+            "ChecksumType": "FULL_OBJECT",
+            "Size": 117834,
+            "StorageClass": "STANDARD",
+            "Key": "serverless/foodiary-v2-api/dev/1758217274844-2025-09-18T17:41:14.844Z/foodiary-v2-api-createMeal.zip",
+            "VersionId": "GeF6cFvJrUeCTgZtourty6Sqe_wmLvpe",
+            "IsLatest": false,
+            "LastModified": "2025-09-18T17:41:22+00:00",
+            "Owner": {
+                "ID": "8a5b0ce8a0aa01fd18987eb20e2f5a83284b54161de865c5e818b083a3b4e098"
+            }
+        },
+        {
+            "ETag": "\"84ccf2cf67fd3546df1479c6908caf15\"",
+            "ChecksumAlgorithm": [
+                "CRC64NVME"
+            ],
+            "ChecksumType": "FULL_OBJECT",
+            "Size": 1290,
+            "StorageClass": "STANDARD",
+            "Key": "serverless/foodiary-v2-api/dev/1758217274844-2025-09-18T17:41:14.844Z/foodiary-v2-api-fileUploadedEvent.zip",
+            "VersionId": "NKLbNF1al6XGbpUQxo6JN2mV6lCJTLn8",
+            "IsLatest": false,
+            "LastModified": "2025-09-18T17:41:23+00:00",
+            "Owner": {
+                "ID": "8a5b0ce8a0aa01fd18987eb20e2f5a83284b54161de865c5e818b083a3b4e098"
+            }
+        },
+        {
+            "ETag": "\"858feae7917bc037751b539c51326e29\"",
+            "ChecksumAlgorithm": [
+                "CRC64NVME"
+            ],
+            "ChecksumType": "FULL_OBJECT",
+            "Size": 117743,
+            "StorageClass": "STANDARD",
+            "Key": "serverless/foodiary-v2-api/dev/1758217274844-2025-09-18T17:41:14.844Z/foodiary-v2-api-getMealById.zip",
+            "VersionId": "PHUVXQP0bm1ztedLJcbOLL6UWHvA5OQo",
+            "IsLatest": false,
+            "LastModified": "2025-09-18T17:41:24+00:00",
+            "Owner": {
+                "ID": "8a5b0ce8a0aa01fd18987eb20e2f5a83284b54161de865c5e818b083a3b4e098"
+            }
+        },
+        {
+            "ETag": "\"a230d8051ee6714e7d91a537949cd0da\"",
+            "ChecksumAlgorithm": [
+                "CRC64NVME"
+            ],
+            "ChecksumType": "FULL_OBJECT",
+            "Size": 117846,
+            "StorageClass": "STANDARD",
+            "Key": "serverless/foodiary-v2-api/dev/1758217274844-2025-09-18T17:41:14.844Z/foodiary-v2-api-listMeals.zip",
+            "VersionId": "rhgAmSoj.bHPqeLaY1HeavsNn6MBXOGI",
+            "IsLatest": false,
+            "LastModified": "2025-09-18T17:41:23+00:00",
+            "Owner": {
+                "ID": "8a5b0ce8a0aa01fd18987eb20e2f5a83284b54161de865c5e818b083a3b4e098"
+            }
+        },
+        {
+            "ETag": "\"aa6b2dd3fb58bbb195eac0b9b2787128\"",
+            "ChecksumAlgorithm": [
+                "CRC64NVME"
+            ],
+            "ChecksumType": "FULL_OBJECT",
+            "Size": 100871,
+            "StorageClass": "STANDARD",
+            "Key": "serverless/foodiary-v2-api/dev/1758217274844-2025-09-18T17:41:14.844Z/foodiary-v2-api-me.zip",
+            "VersionId": "9V8mWsqGXbsJV4NZDuzqQoW.gCiqWw7V",
+            "IsLatest": false,
+            "LastModified": "2025-09-18T17:41:22+00:00",
+            "Owner": {
+                "ID": "8a5b0ce8a0aa01fd18987eb20e2f5a83284b54161de865c5e818b083a3b4e098"
+            }
+        },
+        {
+            "ETag": "\"bb46abc86ef4a12b072179a3a3ef839f\"",
+            "ChecksumAlgorithm": [
+                "CRC64NVME"
+            ],
+            "ChecksumType": "FULL_OBJECT",
+            "Size": 113750,
+            "StorageClass": "STANDARD",
+            "Key": "serverless/foodiary-v2-api/dev/1758217274844-2025-09-18T17:41:14.844Z/foodiary-v2-api-processMeal.zip",
+            "VersionId": "fAs7d4Ih5qxBN4rS4uoa674yzDp8hL_S",
+            "IsLatest": false,
+            "LastModified": "2025-09-18T17:41:24+00:00",
+            "Owner": {
+                "ID": "8a5b0ce8a0aa01fd18987eb20e2f5a83284b54161de865c5e818b083a3b4e098"
+            }
+        },
+        {
+            "ETag": "\"b14a6508460ad11eb7ff8f1c8e7549a9\"",
+            "ChecksumAlgorithm": [
+                "CRC64NVME"
+            ],
+            "ChecksumType": "FULL_OBJECT",
+            "Size": 127290,
+            "StorageClass": "STANDARD",
+            "Key": "serverless/foodiary-v2-api/dev/1758217274844-2025-09-18T17:41:14.844Z/foodiary-v2-api-signin.zip",
+            "VersionId": "hhDRPT2jf8ttOintDbfmghLatV_NZ2dx",
+            "IsLatest": false,
+            "LastModified": "2025-09-18T17:41:21+00:00",
+            "Owner": {
+                "ID": "8a5b0ce8a0aa01fd18987eb20e2f5a83284b54161de865c5e818b083a3b4e098"
+            }
+        },
+        {
+            "ETag": "\"0140d1bffd2ff1440cfcf22b774fbb77\"",
+            "ChecksumAlgorithm": [
+                "CRC64NVME"
+            ],
+            "ChecksumType": "FULL_OBJECT",
+            "Size": 127622,
+            "StorageClass": "STANDARD",
+            "Key": "serverless/foodiary-v2-api/dev/1758217274844-2025-09-18T17:41:14.844Z/foodiary-v2-api-signup.zip",
+            "VersionId": "_IHpCdVo.VVEzBZAkDUXqGjr9FHCxEKf",
+            "IsLatest": false,
+            "LastModified": "2025-09-18T17:41:21+00:00",
+            "Owner": {
+                "ID": "8a5b0ce8a0aa01fd18987eb20e2f5a83284b54161de865c5e818b083a3b4e098"
+            }
+        },
+        {
+            "ETag": "\"307188febace2acc9dc19f46a75f7f2d\"",
+            "ChecksumAlgorithm": [
+                "CRC64NVME"
+            ],
+            "ChecksumType": "FULL_OBJECT",
+            "Size": 57072,
+            "StorageClass": "STANDARD",
+            "Key": "serverless/foodiary-v2-api/dev/1758217274844-2025-09-18T17:41:14.844Z/serverless-state.json",
+            "VersionId": "1c_YHhU6GC4.NcCDnANDjwKcq3XYxQPS",
+            "IsLatest": false,
+            "LastModified": "2025-09-18T17:41:20+00:00",
+            "Owner": {
+                "ID": "8a5b0ce8a0aa01fd18987eb20e2f5a83284b54161de865c5e818b083a3b4e098"
+            }
+        },
+        {
+            "ETag": "\"519d5487298497b3f6b4827e4081daea\"",
+            "ChecksumAlgorithm": [
+                "CRC64NVME"
+            ],
+            "ChecksumType": "FULL_OBJECT",
+            "Size": 23874,
+            "StorageClass": "STANDARD",
+            "Key": "serverless/foodiary-v2-api/dev/1758217580884-2025-09-18T17:46:20.884Z/compiled-cloudformation-template.json",
+            "VersionId": "gSI.kCqHHtptB3Q4pfMaUzQfQcmBBu8x",
+            "IsLatest": false,
+            "LastModified": "2025-09-18T17:46:28+00:00",
+            "Owner": {
+                "ID": "8a5b0ce8a0aa01fd18987eb20e2f5a83284b54161de865c5e818b083a3b4e098"
+            }
+        },
+        {
+            "ETag": "\"1f53f6330aa7d31bda3892778220749d\"",
+            "ChecksumAlgorithm": [
+                "CRC64NVME"
+            ],
+            "ChecksumType":

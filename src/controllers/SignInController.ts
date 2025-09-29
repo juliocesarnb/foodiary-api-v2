@@ -8,8 +8,9 @@ import { signAccessTokenFor } from '../lib/jwt';
 import { HttpRequest, HttpResponse } from '../types/Http';
 import { badRequest, ok, unauthorized } from '../utils/http';
 
+// src/controllers/SignInController.ts
 const schema = z.object({
-  email: z.email(),
+  email: z.string().email(),  // ← Mudança aqui
   password: z.string().min(8),
 });
 

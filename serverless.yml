@@ -1,7 +1,8 @@
 org: juliocesarnb
-service: foodiary-v2-api   # 👈 novo nome do projeto
+service: foodiary-v2-api
 
 plugins:
+  - serverless-s3-local
   - serverless-offline
 
 provider:
@@ -9,12 +10,13 @@ provider:
   region: us-east-1
   runtime: nodejs22.x
   architecture: arm64
+  stage: dev2 # 👈 novo stage
   environment:
     DATABASE_URL: ${env:DATABASE_URL}
     JWT_SECRET: ${env:JWT_SECRET}
     OPENAI_API_KEY: ${env:OPENAI_API_KEY}
-    BUCKET_NAME: !Ref UploadsBucketV2
-    MEALS_QUEUE_URL: !Ref MealsQueueV2
+    BUCKET_NAME: !Ref UploadsBucketV3
+    MEALS_QUEUE_URL: !Ref MealsQueueV3
   iam:
     role:
       statements:
@@ -22,10 +24,10 @@ provider:
           Action:
             - s3:PutObject
             - s3:GetObject
-          Resource: !Sub '${UploadsBucketV2.Arn}/*'
+          Resource: !Sub "${UploadsBucketV3.Arn}/*"
         - Effect: Allow
           Action: sqs:SendMessage
-          Resource: !GetAtt MealsQueueV2.Arn
+          Resource: !GetAtt MealsQueueV3.Arn
 
 package:
   individually: true
@@ -34,7 +36,11 @@ build:
   esbuild:
     minify: true
     sourcemap: false
-
+custom:
+  s3:
+    host: localhost
+    port: 4571
+    directory: /tmp
 functions:
   signin:
     handler: src/functions/signin.handler
@@ -82,34 +88,34 @@ functions:
     handler: src/functions/fileUploadedEvent.handler
     events:
       - s3:
-          bucket: !Ref UploadsBucketV2
+          bucket: !Ref UploadsBucketV3
           event: s3:ObjectCreated:*
-          forceDeploy: true
+          existing: true # 👈 indica bucket existente para evitar conflito
 
   processMeal:
     handler: src/functions/processMeal.handler
     events:
       - sqs:
-          arn: !GetAtt MealsQueueV2.Arn
+          arn: !GetAtt MealsQueueV3.Arn
           batchSize: 1
 
 resources:
   Resources:
-    UploadsBucketV2:
+    UploadsBucketV3:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: jstacklab-v2-foodiary-uploads   # 👈 diferente do antigo
+        BucketName: jstacklab-v3-foodiary-uploads # 👈 novo bucket
 
-    MealsQueueV2:
+    MealsQueueV3:
       Type: AWS::SQS::Queue
       Properties:
-        QueueName: meals-queue-v2
+        QueueName: meals-queue-v3
         VisibilityTimeout: 60
         RedrivePolicy:
           maxReceiveCount: 1
-          deadLetterTargetArn: !GetAtt MealsDLQV2.Arn
+          deadLetterTargetArn: !GetAtt MealsDLQV3.Arn
 
-    MealsDLQV2:
+    MealsDLQV3:
       Type: AWS::SQS::Queue
       Properties:
-        QueueName: meals-queue-v2-dlq
+        QueueName: meals-queue-v3-dlq
