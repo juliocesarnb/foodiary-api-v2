@@ -14,10 +14,11 @@ export class ProcessMeal {
     });
 
     if (!meal) {
-      throw new Error('Meal not found.');
+      throw new Error(`Meal not found for fileKey=${fileKey}`);
     }
 
     if (meal.status === 'failed' || meal.status === 'success') {
+      console.log(`[ProcessMeal] Meal ${meal.id} already finalized with status=${meal.status}`);
       return;
     }
 
@@ -29,11 +30,13 @@ export class ProcessMeal {
     try {
       let icon = '';
       let name = '';
-      let foods = [];
+      let foods: any[] = [];
 
       if (meal.inputType === 'audio') {
+        console.log(`[ProcessMeal] Processing audio meal id=${meal.id}`);
         const audioFileBuffer = await this.downloadAudioFile(meal.inputFileKey);
         const transcription = await transcribeAudio(audioFileBuffer);
+        console.log(`[ProcessMeal] Transcription result: ${transcription}`);
 
         const mealDetails = await getMealDetailsFromText({
           createdAt: new Date(),
@@ -46,6 +49,7 @@ export class ProcessMeal {
       }
 
       if (meal.inputType === 'picture') {
+        console.log(`[ProcessMeal] Processing picture meal id=${meal.id}`);
         const imageURL = await this.getImageURL(meal.inputFileKey);
 
         const mealDetails = await getMealDetailsFromImage({
@@ -65,14 +69,17 @@ export class ProcessMeal {
           name,
           icon,
           foods,
+          errorMessage: null, // limpa erro anterior se existir
         })
         .where(eq(mealsTable.id, meal.id));
-    } catch (error) {
-      console.log(error);
+
+      console.log(`[ProcessMeal] Meal ${meal.id} processed successfully!`);
+    } catch (error: any) {
+      console.error(`[ProcessMeal] Error processing meal id=${meal.id}:`, error);
 
       await db
         .update(mealsTable)
-        .set({ status: 'failed' })
+        .set({ status: 'failed', errorMessage: error.message || 'Unknown error' })
         .where(eq(mealsTable.id, meal.id));
     }
   }
@@ -89,9 +96,9 @@ export class ProcessMeal {
       throw new Error('Cannot load the audio file.');
     }
 
-    const chunks = [];
+    const chunks: Buffer[] = [];
     for await (const chunk of Body) {
-      chunks.push(chunk);
+      chunks.push(chunk as Buffer);
     }
 
     return Buffer.concat(chunks);

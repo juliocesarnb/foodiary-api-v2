@@ -1,4 +1,4 @@
-import { date, integer, json, pgEnum, pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
+import { date, integer, json, pgEnum, pgTable, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
 
 export const usersTable = pgTable('users', {
   id: uuid().primaryKey().defaultRandom(),
@@ -18,7 +18,12 @@ export const usersTable = pgTable('users', {
   fats: integer().notNull(),
 });
 
-export const mealStatus = pgEnum('meal_status', ['uploading','processing', 'success', 'failed']);
+export const mealStatus = pgEnum('meal_status', [
+  'uploading',
+  'processing',
+  'success',
+  'failed',
+]);
 
 export const mealInputType = pgEnum('meal_input_type', ['audio', 'picture']);
 
@@ -32,6 +37,7 @@ export const mealsTable = pgTable('meals', {
   inputFileKey: varchar('input_file_key', { length: 255 }).notNull(),
   name: varchar({ length: 255 }).notNull(),
   icon: varchar({ length: 100 }).notNull(),
-  foods: json(),  
+  foods: json(),
+  errorMessage: text('error_message'), // 🔹 novo campo para armazenar erros
   createdAt: timestamp('created_at').notNull().defaultNow(),
 });

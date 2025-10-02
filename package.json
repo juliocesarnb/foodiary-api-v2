@@ -3,7 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "sls offline start --reloadHandler"
+    "dev": "sls offline start --reloadHandler",
+    "db:generate": "drizzle-kit generate",
+    "db:push": "drizzle-kit push",
+    "db:migrate": "drizzle-kit generate && drizzle-kit push",
+    "typecheck": "tsc --noEmit",
+    "start": "tsx src/index.ts"
   },
   "repository": {
     "type": "git",
@@ -22,7 +27,7 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^24.0.15",
     "dotenv": "^17.2.0",
-    "drizzle-kit": "^0.31.4",
+    "drizzle-kit": "^0.31.5",
     "serverless-offline": "^14.4.0",
     "serverless-s3-local": "^0.8.5",
     "tsx": "^4.20.3",

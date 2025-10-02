@@ -2,7 +2,6 @@ org: juliocesarnb
 service: foodiary-v2-api
 
 plugins:
-  - serverless-s3-local
   - serverless-offline
 
 provider:
@@ -10,7 +9,7 @@ provider:
   region: us-east-1
   runtime: nodejs22.x
   architecture: arm64
-  stage: dev2 # 👈 novo stage
+  stage: dev2
   environment:
     DATABASE_URL: ${env:DATABASE_URL}
     JWT_SECRET: ${env:JWT_SECRET}
@@ -26,8 +25,20 @@ provider:
             - s3:GetObject
           Resource: !Sub "${UploadsBucketV3.Arn}/*"
         - Effect: Allow
-          Action: sqs:SendMessage
-          Resource: !GetAtt MealsQueueV3.Arn
+          Action:
+            - sqs:SendMessage
+            - sqs:ReceiveMessage
+            - sqs:DeleteMessage
+            - sqs:GetQueueAttributes
+          Resource:
+            - !GetAtt MealsQueueV3.Arn
+            - !GetAtt MealsDLQV3.Arn
+        - Effect: Allow
+          Action:
+            - logs:CreateLogGroup
+            - logs:CreateLogStream
+            - logs:PutLogEvents
+          Resource: "*"
 
 package:
   individually: true
@@ -36,14 +47,12 @@ build:
   esbuild:
     minify: true
     sourcemap: false
-custom:
-  s3:
-    host: localhost
-    port: 4571
-    directory: /tmp
+
 functions:
   signin:
     handler: src/functions/signin.handler
+    timeout: 30
+    memorySize: 256
     events:
       - httpApi:
           method: POST
@@ -51,6 +60,8 @@ functions:
 
   signup:
     handler: src/functions/signup.handler
+    timeout: 30
+    memorySize: 256
     events:
       - httpApi:
           method: POST
@@ -58,6 +69,8 @@ functions:
 
   me:
     handler: src/functions/me.handler
+    timeout: 30
+    memorySize: 256
     events:
       - httpApi:
           method: GET
@@ -65,6 +78,8 @@ functions:
 
   createMeal:
     handler: src/functions/createMeal.handler
+    timeout: 30
+    memorySize: 256
     events:
       - httpApi:
           method: POST
@@ -72,6 +87,8 @@ functions:
 
   listMeals:
     handler: src/functions/listMeals.handler
+    timeout: 30
+    memorySize: 256
     events:
       - httpApi:
           method: GET
@@ -79,6 +96,8 @@ functions:
 
   getMealById:
     handler: src/functions/getMealById.handler
+    timeout: 30
+    memorySize: 256
     events:
       - httpApi:
           method: GET
@@ -86,14 +105,18 @@ functions:
 
   fileUploadedEvent:
     handler: src/functions/fileUploadedEvent.handler
+    timeout: 30
+    memorySize: 256
     events:
       - s3:
           bucket: !Ref UploadsBucketV3
           event: s3:ObjectCreated:*
-          existing: true # 👈 indica bucket existente para evitar conflito
+          existing: true
 
   processMeal:
     handler: src/functions/processMeal.handler
+    timeout: 300
+    memorySize: 2048
     events:
       - sqs:
           arn: !GetAtt MealsQueueV3.Arn
@@ -104,18 +127,20 @@ resources:
     UploadsBucketV3:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: jstacklab-v3-foodiary-uploads # 👈 novo bucket
+        BucketName: jstacklab-v3-foodiary-uploads
 
     MealsQueueV3:
       Type: AWS::SQS::Queue
       Properties:
         QueueName: meals-queue-v3
-        VisibilityTimeout: 60
+        VisibilityTimeout: 360
+        MessageRetentionPeriod: 3600
         RedrivePolicy:
-          maxReceiveCount: 1
+          maxReceiveCount: 3
           deadLetterTargetArn: !GetAtt MealsDLQV3.Arn
 
     MealsDLQV3:
       Type: AWS::SQS::Queue
       Properties:
         QueueName: meals-queue-v3-dlq
+        MessageRetentionPeriod: 1209600
