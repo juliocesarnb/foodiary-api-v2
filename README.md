@@ -377,40 +377,6 @@ aws sqs receive-message \
 
 ---
 
-## 🐛 Troubleshooting
-
-### Lambda dando timeout
-**Problema:** Processamento de IA demora muito.
-
-**Solução:**
-- Aumente `timeout` no `serverless.yml`
-- Verifique se `memorySize` está adequada (2GB recomendado)
-- Confirme que `VisibilityTimeout` do SQS > timeout da Lambda
-
-### "429 - Quota exceeded" da OpenAI
-**Problema:** Créditos esgotados.
-
-**Solução:**
-- Adicione créditos em https://platform.openai.com/settings/organization/billing/overview
-- Implemente rate limiting no frontend
-- Configure alertas de quota
-
-### App fica em loading infinito
-**Problema:** Frontend não recebe status "success".
-
-**Debug:**
-1. Verifique logs do CloudWatch
-2. Confirme se arquivo chegou no S3
-3. Verifique mensagens no SQS
-4. Teste com mock da IA (descomente código em `ai.ts`)
-
-### "localhost:4571" no upload
-**Problema:** `serverless-offline` rodando enquanto testa no mobile.
-
-**Solução:**
-- Pare `serverless-offline` (Ctrl+C)
-- Use apenas a API deployada na AWS
-- Atualize `httpClient.ts` com URL de produção
 
 ---
 
@@ -461,7 +427,9 @@ Este projeto foi desenvolvido como parte do evento **Jstack-lab** ministrado por
 **Julio Cesar**
 
 - GitHub: [@juliocesarnb](https://github.com/juliocesarnb)
-- LinkedIn: [Seu LinkedIn]
+- LinkedIn:  [julio cesar](www.linkedin.com/in/júlio-cesar-cnb99)
+
+
 
 ---
 
